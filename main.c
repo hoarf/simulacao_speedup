@@ -16,7 +16,7 @@ int main(int argc, char  *argv[])
 	timer_begin_counting();
 
 	int vetor[8] = {10 ,2 ,10 ,5 ,7 ,8 ,1 ,10};
-	int valor_media = mds_calcula_media(&vetor, 8);
+	int valor_media = mds_calcula_media(vetor);
 
 	printf("O valor da média é %d\n", valor_media);
 	//Exemplo de como imprimir o resultado do timer		
