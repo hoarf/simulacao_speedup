@@ -1,1 +1,1 @@
-int mds_calcula_media();
+int mds_calcula_media(int * array);
