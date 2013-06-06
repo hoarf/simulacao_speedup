@@ -1,1 +1,1 @@
-int mds_calcula_media(int * array);
+float mds_calcula_media(int * arrayi, int array_size);
