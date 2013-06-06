@@ -15,10 +15,10 @@ int main(int argc, char  *argv[])
 	timer_reset();
 	timer_begin_counting();
 
-	int vetor[8] = {10 ,2 ,10 ,5 ,7 ,8 ,1 ,10};
-	int valor_media = mds_calcula_media(vetor);
+	int vetor[8] = {10 ,2 ,10 ,5 ,7 ,8 ,1 ,100};
+	float valor_media = mds_calcula_media(vetor,8);
 
-	printf("O valor da média é %d\n", valor_media);
+	printf("O valor da média é %f\n", valor_media);
 	//Exemplo de como imprimir o resultado do timer		
 	timer_stop_counting();
 
