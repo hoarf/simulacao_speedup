@@ -6,6 +6,7 @@
 *.a
 
 array.txt
+simulacao_speedup
 
 # Shared objects (inc. Windows DLLs)
 *.dll
