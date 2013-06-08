@@ -1,6 +1,6 @@
 #!/bin/bash
 # Scheduler - Nicolas Silveira Kagami
-# How to use: bash scheduler.sh 
+# How to use: bash scheduler.sh 1,2,4 ...
 
 OUTPUT_FILE="Results.csv"
 EXE_NAME="./broadcast"
