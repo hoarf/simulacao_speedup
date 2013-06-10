@@ -40,7 +40,7 @@ int main(int argc, char  *argv[])
     }
     float local_mean = ((float) (sum))/((float)(DATA_SIZE)/proc_number);
     float local_squared_mean = variance_sum/(DATA_SIZE/proc_number); 
-    printf("Rank: %d\nSum: %d Local Mean: %f Local Variance: %f %f\n",rank,sum,local_mean,variance_sum,local_squared_mean);
+    printf("Rank: %d Sum: %d Local Mean: %f Local Variance: %f %f\n",rank,sum,local_mean,variance_sum,local_squared_mean);
 
     MPI_Gather(&local_mean,1,MPI_FLOAT,averages,1,MPI_FLOAT,0,MPI_COMM_WORLD);
     MPI_Gather(&local_squared_mean,1,MPI_FLOAT,variances,1,MPI_FLOAT,0,MPI_COMM_WORLD);
@@ -55,7 +55,7 @@ int main(int argc, char  *argv[])
         }
         final_average = final_average/proc_number;
         final_variance = final_variance/proc_number - final_average*final_average;
-        printf("Average: %f\n Variance: %f",final_average,final_variance);
+        printf("Average: %f\nVariance: %f",final_average,final_variance);
     }
 
 
