@@ -12,6 +12,7 @@ int main(int argc, char  *argv[])
     float media;
     int * main;
     int * sub;
+    int * result;
 
     MPI_Init(&argc, &argv) ;
     printf("%d",MPI_Comm_size(MPI_COMM_WORLD, &total_processos));
@@ -19,6 +20,7 @@ int main(int argc, char  *argv[])
 
     if (rank == 0) 
     {
+    	result = (int*)malloc(total_processos*sizeof(int));
     	main = (int*) malloc(TAMANHO_PROBLEMA*sizeof(int));
     	for (i = 0; i < TAMANHO_PROBLEMA; ++i)
 	    	main[i] = i;
@@ -28,11 +30,17 @@ int main(int argc, char  *argv[])
     
     MPI_Scatter(main, TAMANHO_PROBLEMA/total_processos, MPI_INT, sub, TAMANHO_PROBLEMA/total_processos,MPI_INT, 0, MPI_COMM_WORLD); 
 	
-	// sum = 0;
-    //    for( i = 0; i < TAMANHO_PROBLEMA/total_processos ; i++)
-    //        sum=sum+sub[i];
+    sum = 0;
+    for( i = 0; i < TAMANHO_PROBLEMA/total_processos ; i++)
+            sum=sum+sub[i];
 
-    //printf("Rank= %d Soma= %d\n ",rank,sum);
+    printf("Rank= %d Soma= %d\n ",rank,sum);
+
+      MPI_Gather(&sum,1,MPI_INT,result,1,MPI_INT,0,MPI_COMM_WORLD);
+	
+	 if(rank == root){
+	 	  // TODO  Rotina que calcula a media
+	 }
 
 
     MPI_Finalize();
