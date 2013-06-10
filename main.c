@@ -1,28 +1,58 @@
-#include <mpi.h>
-#include "timer.h"
-#include "mds_calcula_media.h"
+#include "main.h"
+
+#define TAMANHO_PROBLEMA 100
+
+FILE * incializa_arquivo_ou_morre();
+void finaliza_arquivo(FILE* arquivo);
+void inicializa_buffer(int* buffer, int tamanho);
 
 int main(int argc, char  *argv[])
 {
-	int  i;
-	int total_processos, rank;
+    int total_processos, rank, sum, i;
+    float media;
+    int * main;
+    int * sub;
 
- 	MPI_Init(&argc, &argv) ;
-   	MPI_Comm_size(MPI_COMM_WORLD, &total_processos);
-   	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    MPI_Init(&argc, &argv) ;
+    printf("%d",MPI_Comm_size(MPI_COMM_WORLD, &total_processos));
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+    if (rank == 0) 
+    {
+    	main = (int*) malloc(TAMANHO_PROBLEMA*sizeof(int));
+    	for (i = 0; i < TAMANHO_PROBLEMA; ++i)
+	    	main[i] = i;
+    }
+
+	sub = (int*) malloc(TAMANHO_PROBLEMA/total_processos*sizeof(int));
+    
+    MPI_Scatter(main, TAMANHO_PROBLEMA/total_processos, MPI_INT, sub, TAMANHO_PROBLEMA/total_processos,MPI_INT, 0, MPI_COMM_WORLD); 
 	
-	//Exemplo de como usar o timer
-	timer_reset();
-	timer_begin_counting();
+	// sum = 0;
+    //    for( i = 0; i < TAMANHO_PROBLEMA/total_processos ; i++)
+    //        sum=sum+sub[i];
 
-	int vetor[8] = {10 ,2 ,10 ,5 ,7 ,8 ,1 ,100};
-	float valor_media = mds_calcula_media(vetor,8);
+    //printf("Rank= %d Soma= %d\n ",rank,sum);
 
-	printf("O valor da média é %f\n", valor_media);
-	//Exemplo de como imprimir o resultado do timer		
-	timer_stop_counting();
 
-	MPI_Finalize();
+    MPI_Finalize();
+	exit(0);
+}
 
-	return 0;
+FILE * incializa_arquivo_ou_morre()
+{
+	FILE* arquivo = fopen("array.txt", "r");
+	if (arquivo == NULL)
+	{
+		printf("Não foi possível abrir o arquivo\n");
+		exit(1);
+	}
+	printf("Arquivo aberto com sucesso...\n");
+	return arquivo;
+}
+
+void finaliza_arquivo(FILE * arquivo)
+{
+	printf("Fechando arquivo...\n");
+	fclose(arquivo);
 }

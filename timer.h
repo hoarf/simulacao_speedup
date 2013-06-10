@@ -1,3 +1,6 @@
+#ifndef __TIMER__
+#define __TIMER__
+
 #include <stdio.h>
 #include <time.h>
 
@@ -12,3 +15,5 @@ int timer_begin_counting();
 int timer_stop_counting();
 
 int timer_reset();
+
+#endif

@@ -1,10 +1,11 @@
-#include <stdio.h>
 #include "mds_calcula_media.h"
+
+#define MAX_ARRAY_SIZE 1024*1024*1024*4 //4MiB
 
 float mds_calcula_media(int* array,int array_size)
 {
     int i;
-    float media = 0;// se o for começa em 0, tu teria somado duas vezes o primeiro
+    float media = 0;
     for (i = 0; i < array_size; i++)
     {
         media = (media + array[i]);
@@ -12,4 +13,16 @@ float mds_calcula_media(int* array,int array_size)
     }
     media = media/array_size;
     return media;
+}
+
+float mds_calcula_media_arquivo(FILE* arquivo)
+{
+    printf("Calculando média ...\n");
+    int valor, count = 0;
+    float media = 0.0;
+    while (fscanf(arquivo,"%d", &valor) != EOF)  {
+        media = media + valor;
+        count++;
+    }
+    return media/count;
 }
