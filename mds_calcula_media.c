@@ -1,7 +1,3 @@
-#include "mds_calcula_media.h"
-
-#define MAX_ARRAY_SIZE 1024*1024*1024*4 //4MiB
-
 float mds_calcula_media(int* array,int array_size)
 {
     int i;

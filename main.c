@@ -2,11 +2,6 @@
 
 //#define DATA_SIZE 200000000
 #define DATA_SIZE 20
-
-FILE * incializa_arquivo_ou_morre();
-void finaliza_arquivo(FILE* arquivo);
-void inicializa_buffer(int* buffer, int tamanho);
-
 int main(int argc, char  *argv[])
 {
     int proc_number, rank, sum, i;
@@ -18,8 +13,7 @@ int main(int argc, char  *argv[])
     float final_variance;
 
     MPI_Init(&argc, &argv) ;
-    printf("%d\n",MPI_Comm_size(MPI_COMM_WORLD, &proc_number));
-    printf("Proc Number: %d\n",proc_number);
+    MPI_Comm_size(MPI_COMM_WORLD, &proc_number);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     if (rank == 0) 
@@ -67,22 +61,4 @@ int main(int argc, char  *argv[])
 
     MPI_Finalize();
     exit(0);
-}
-
-FILE * incializa_arquivo_ou_morre()
-{
-	FILE* arquivo = fopen("array.txt", "r");
-	if (arquivo == NULL)
-	{
-		printf("Não foi possível abrir o arquivo\n");
-		exit(1);
-	}
-	printf("Arquivo aberto com sucesso...\n");
-	return arquivo;
-}
-
-void finaliza_arquivo(FILE * arquivo)
-{
-	printf("Fechando arquivo...\n");
-	fclose(arquivo);
 }
