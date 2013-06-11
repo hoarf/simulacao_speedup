@@ -1,7 +1,7 @@
 #include "main.h"
 
-//#define DATA_SIZE 200000000
-#define DATA_SIZE 20
+#define DATA_SIZE 200
+//#define DATA_SIZE 20
 int main(int argc, char  *argv[])
 {
     int proc_number, rank, sum, i;
@@ -23,8 +23,10 @@ int main(int argc, char  *argv[])
         data = (int*) malloc(DATA_SIZE*sizeof(int));
         for (i = 0; i < DATA_SIZE; ++i)
         {
-            data[i] = 12 + i % 20;// / (DATA_SIZE/proc_number);
+            printf("%d,", 12*i + i %20 );
+            data[i] = 12*i + i % 20;// / (DATA_SIZE/proc_number);
         }
+        printf("\n");
     }
 
     sub = (int*) malloc(DATA_SIZE/proc_number*sizeof(int));
