@@ -3,7 +3,7 @@
 # How to use: bash scheduler.sh 1,2,4 ...
 
 OUTPUT_FILE="Results.csv"
-EXE_NAME="./broadcast"
+EXE_NAME="./avg_var"
 LIST=`echo "$1,"`
 SAFE="1"
 i=1
