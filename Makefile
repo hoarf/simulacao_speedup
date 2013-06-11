@@ -1,6 +1,6 @@
 CC=mpicc
 CFLAGS=-I.
-DEPS = main.h timer.h mds_calcula_media.h 
+DEPS = 
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)

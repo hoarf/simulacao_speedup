@@ -8,7 +8,7 @@ LIST=`echo "$1,"`
 SAFE="1"
 i=1
 
-rm $OUTPUT_FILE
+rm -f $OUTPUT_FILE
 while [ $SAFE != "0" ]
 do
     PROC_NUM=`echo "$LIST" | cut -d, -f${i}`

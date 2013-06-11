@@ -1,7 +1,8 @@
-#include "main.h"
+#include <mpi.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#define DATA_SIZE 51891840
-//#define DATA_SIZE 20
+#define DATA_SIZE  259459200 
 int main(int argc, char  *argv[])
 {
     int proc_number, rank, sum, i;
@@ -11,8 +12,8 @@ int main(int argc, char  *argv[])
     float * variances;
     float local_mean;
     float local_squared_mean;
-    float final_average;
-    float final_variance;
+    float final_average[1];
+    float final_variance[1];
 
     MPI_Init(&argc, &argv) ;
     MPI_Comm_size(MPI_COMM_WORLD, &proc_number);
@@ -43,21 +44,16 @@ int main(int argc, char  *argv[])
     local_mean = ((float) (sum))/((float)(DATA_SIZE)/proc_number);
     local_squared_mean = variance_sum/(DATA_SIZE); 
     //printf("Rank: %d Sum: %d Local Mean: %f Local Variance: %f\n",rank,sum,local_mean,local_squared_mean);
-
-    MPI_Gather(&local_mean,1,MPI_FLOAT,averages,1,MPI_FLOAT,0,MPI_COMM_WORLD);
-    MPI_Gather(&local_squared_mean,1,MPI_FLOAT,variances,1,MPI_FLOAT,0,MPI_COMM_WORLD);
+    //float lala[1];
+    //MPI_Gather(&local_mean,1,MPI_FLOAT,averages,1,MPI_FLOAT,0,MPI_COMM_WORLD);
+    //MPI_Gather(&local_squared_mean,1,MPI_FLOAT,variances,1,MPI_FLOAT,0,MPI_COMM_WORLD);
+    MPI_Reduce(&local_mean,final_average,1,MPI_FLOAT,MPI_SUM,0,MPI_COMM_WORLD);
+    MPI_Reduce(&local_squared_mean,final_variance,1,MPI_FLOAT,MPI_SUM,0,MPI_COMM_WORLD);
     if(rank == 0)
     {
-        final_average = 0;
-        final_variance = 0;
-        for(i=0;i<proc_number;i++)
-        {
-               final_average += averages[i];
-               final_variance += variances[i];
-        }
-        final_average = final_average/proc_number;
-        final_variance = final_variance - final_average*final_average;
-        printf("Average: %f\nVariance: %f\n",final_average,final_variance);
+        final_average[0] = final_average[0]/proc_number;
+        final_variance[0] = final_variance[0] - final_average[0]*final_average[0];
+        printf("Average: %f\nVariance: %f\n",final_average[0],final_variance[0]);
     }
 
 
