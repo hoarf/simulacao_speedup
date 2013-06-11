@@ -27,7 +27,6 @@ int main(int argc, char  *argv[])
         {
             data[i] = 12 + (i % 20);// / (DATA_SIZE/proc_number);
         }
-        printf("\n");
     }
 
     sub = (int*) malloc(DATA_SIZE/proc_number*sizeof(int));
@@ -58,7 +57,7 @@ int main(int argc, char  *argv[])
         }
         final_average = final_average/proc_number;
         final_variance = final_variance - final_average*final_average;
-        printf("Average: %f\nVariance: %f",final_average,final_variance);
+        printf("Average: %f\nVariance: %f\n",final_average,final_variance);
     }
 
 
