@@ -6,7 +6,7 @@ DEPS = main.h timer.h mds_calcula_media.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 broadcast: clean main.o 
-	$(CC) -o broadcast main.o -I.
+	$(CC) -o  avg_var main.o -I.
 
 clean:
 	rm -rf *.o

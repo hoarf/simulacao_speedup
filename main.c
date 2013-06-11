@@ -1,7 +1,7 @@
 #include "main.h"
 
-//#define DATA_SIZE 200000000
-#define DATA_SIZE 20
+#define DATA_SIZE 51891840
+//#define DATA_SIZE 20
 int main(int argc, char  *argv[])
 {
     int proc_number, rank, sum, i;
@@ -9,6 +9,8 @@ int main(int argc, char  *argv[])
     int * sub;
     float * averages;
     float * variances;
+    float local_mean;
+    float local_squared_mean;
     float final_average;
     float final_variance;
 
@@ -23,7 +25,7 @@ int main(int argc, char  *argv[])
         data = (int*) malloc(DATA_SIZE*sizeof(int));
         for (i = 0; i < DATA_SIZE; ++i)
         {
-            data[i] = 12 + i % 20;// / (DATA_SIZE/proc_number);
+            data[i] = 12 + (i % 20);// / (DATA_SIZE/proc_number);
         }
     }
 
@@ -38,9 +40,9 @@ int main(int argc, char  *argv[])
         sum = sum + sub[i];
         variance_sum += (sub[i])*(sub[i]);
     }
-    float local_mean = ((float) (sum))/((float)(DATA_SIZE)/proc_number);
-    float local_squared_mean = variance_sum/(DATA_SIZE/proc_number); 
-    printf("Rank: %d Sum: %d Local Mean: %f Local Variance: %f %f\n",rank,sum,local_mean,variance_sum,local_squared_mean);
+    local_mean = ((float) (sum))/((float)(DATA_SIZE)/proc_number);
+    local_squared_mean = variance_sum/(DATA_SIZE/proc_number); 
+    //printf("Rank: %d Sum: %d Local Mean: %f Local Variance: %f\n",rank,sum,local_mean,local_squared_mean);
 
     MPI_Gather(&local_mean,1,MPI_FLOAT,averages,1,MPI_FLOAT,0,MPI_COMM_WORLD);
     MPI_Gather(&local_squared_mean,1,MPI_FLOAT,variances,1,MPI_FLOAT,0,MPI_COMM_WORLD);
